@@ -31,18 +31,28 @@ export const ChessBoard = ({ board, socket, color, setBoard, chess }: {
             return;
         }
         else if (from) {
+            if (cell && cell.color === color) {
+                setFrom(cell.square);
+                console.log(cell.square);
+                return;
+            }
             const to = String.fromCharCode(97 + j) + (8 - i + 1);
             const move = {
                 from,
                 to
             }
-            socket?.send(JSON.stringify({
-                type: MOVE,
-                move
-            }));
-            chess.move(move);
-            setBoard(chess.board());
-            setFrom(null);
+            try {
+                chess.move(move);
+                socket?.send(JSON.stringify({
+                    type: MOVE,
+                    move
+                }));
+                setBoard(chess.board());
+            } catch (error) {
+                console.error("Invalid move:", error);
+            } finally {
+                setFrom(null);
+            }
         }
     }
 
@@ -50,7 +60,7 @@ export const ChessBoard = ({ board, socket, color, setBoard, chess }: {
         {board.map((row, i) => {
             return <div key={i} className="flex">
                 {row.map((square, j) => {
-                    return <div key={j} onClick={() => handleClick(square, i + 1, j)} className={`w-16 h-16 flex justify-center items-center hover:bg-select ${(i + j) % 2 == 0 ? 'bg-bc' : 'bg-lightgreen'} ${from===square?.square?'bg-select':""}`}>
+                    return <div key={j} onClick={() => handleClick(square, i + 1, j)} className={`w-16 h-16 flex justify-center items-center hover:bg-select ${(i + j) % 2 == 0 ? 'bg-bc' : 'bg-lightgreen'} ${from === square?.square ? 'bg-select' : ""}`}>
                         {square ? <img src={`/assets/${square.color}${square.type}.png`}></img> : ""}
                     </div>
                 })}

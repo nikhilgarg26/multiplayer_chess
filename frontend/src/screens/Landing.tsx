@@ -5,7 +5,7 @@ export const Landing = () => {
     const navigate = useNavigate();
     return (<>
         <div className="flex justify-center">
-            <div className="pt-8 max-w-screen-lg">
+            <div className="pt-8 max-w-screen-lg mt-10">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div className="flex justify-center">
                         <img src="/chessboard.png" className="max-w-96"></img>

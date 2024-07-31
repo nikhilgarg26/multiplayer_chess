@@ -42,7 +42,7 @@ export class Game {
         if (this.movesCount % 2 === 1 && socket !== this.player2) return
 
         try {
-            console.log(move);
+            // console.log(move);
             this.board.move(move)
         } catch (e) {
             console.log(e);
@@ -50,6 +50,7 @@ export class Game {
         }
 
         if (this.board.isGameOver()) {
+            console.log(move);
             this.player1.send(JSON.stringify({
                 type: GAME_OVER,
                 payload: {
@@ -62,7 +63,7 @@ export class Game {
                     winner: this.board.turn() === 'w' ? 'black' : 'white'
                 }
             }))
-            return;
+            // return;
         }
 
         if (this.movesCount % 2 === 0) {

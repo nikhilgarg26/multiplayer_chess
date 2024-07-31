@@ -3,6 +3,7 @@ import { Button } from "../components/Button"
 import { ChessBoard } from "../components/Chessboard"
 import { useSocket } from "../hooks/useSocket"
 import { Chess } from 'chess.js'
+import CustomizedDialogs from "../components/Dialog"
 
 export const INIT_GAME = "init_game"
 export const MOVE = "move"
@@ -17,6 +18,8 @@ export const Game = () => {
     const [color, setColor] = useState<Color | null>(null);
     const [chess, setChess] = useState(new Chess());
     const [board, setBoard] = useState(chess.board());
+    const [over, setOver] = useState(false);
+    const [winner, setWinner] = useState<Color | null>(null);
 
     useEffect(() => {
         if (!socket) return;
@@ -40,7 +43,9 @@ export const Game = () => {
                 }
 
                 case GAME_OVER:
-                    alert('You are ' + message.payload.color);
+                    console.log(message);
+                    setWinner(message.payload.winner)
+                    setOver(true);
                     break;
 
                 default:
@@ -53,8 +58,8 @@ export const Game = () => {
     if (!socket) return <div className="bg-green-100 flex justify-center">Connecting to server...</div>
 
     return (<>
-        <div className="flex justify-center">
-            <div className="pt-8 max-w-screen-lg w-full">
+        <div className="flex justify-center ">
+            <div className="pt-8 max-w-screen-lg w-full mt-10">
                 <div className="grid grid-cols-6 gap-4">
                     <div className="col-span-4 flex justify-center">
                         <ChessBoard chess={chess} setBoard={setBoard} board={board} socket={socket} color={color}></ChessBoard>
@@ -70,6 +75,7 @@ export const Game = () => {
                                 Play
                             </Button> )}
                     </div>
+                    {over && <CustomizedDialogs winner={winner}></CustomizedDialogs>}
                 </div>
             </div>
         </div>
