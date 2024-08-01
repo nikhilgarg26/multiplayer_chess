@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MOVE } from "../screens/Game";
 
 // export const MOVE = "move"
-export const ChessBoard = ({ board, socket, color, setBoard, chess }: {
+export const ChessBoard = ({ board, socket, color, setBoard, chess, setBlack, setWhite }: {
     board: ({
         square: Square;
         type: PieceSymbol;
@@ -13,9 +13,14 @@ export const ChessBoard = ({ board, socket, color, setBoard, chess }: {
         square: Square;
         type: PieceSymbol;
         color: Color;
-    } | null)[][]>>, chess: Chess
+    } | null)[][]>>, chess: Chess, setBlack: React.Dispatch<React.SetStateAction<string[] | null>>, setWhite: React.Dispatch<React.SetStateAction<string[] | null>>
 }) => {
+    console.log(color);
     color = color?.[0] ?? null;
+
+    console.log(color)
+
+    const audio = new Audio('/sounds/movesound.mp3');
 
     const [from, setFrom] = useState<Square | null>(null);
 
@@ -24,16 +29,13 @@ export const ChessBoard = ({ board, socket, color, setBoard, chess }: {
         type: PieceSymbol;
         color: Color;
     } | null, i: number, j: number) => {
-        console.log(from);
         if (!from && cell && cell.color === color) {
             setFrom(cell.square);
-            console.log(cell.square);
             return;
         }
         else if (from) {
             if (cell && cell.color === color) {
                 setFrom(cell.square);
-                console.log(cell.square);
                 return;
             }
             const to = String.fromCharCode(97 + j) + (8 - i + 1);
@@ -48,6 +50,10 @@ export const ChessBoard = ({ board, socket, color, setBoard, chess }: {
                     move
                 }));
                 setBoard(chess.board());
+                if(color==='w')setWhite((prevMoves) => [...(prevMoves || []), move.to]);
+                else setBlack((prevMoves) => [...(prevMoves || []), move.to]);
+
+                audio.play();
             } catch (error) {
                 console.error("Invalid move:", error);
             } finally {

@@ -3,6 +3,7 @@ import { Button } from "../components/Button";
 
 export const Landing = () => {
     const navigate = useNavigate();
+    const audio = new Audio('/sounds/click.wav'); 
     return (<>
         <div className="flex justify-center">
             <div className="pt-8 max-w-screen-lg mt-10">
@@ -17,7 +18,10 @@ export const Landing = () => {
                             </h1>
                         </div>
                         <div className="mt-4 flex justify-center">
-                            <Button onClick={()=>{navigate("/game")}} >
+                            <Button onClick={() => {
+                                audio.play()
+                                navigate("/game")
+                            }} >
                                 Play Online
                             </Button>
                         </div>
