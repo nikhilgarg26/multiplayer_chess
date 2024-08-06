@@ -34,19 +34,15 @@ export const Game = () => {
                 case INIT_GAME:
                     setConnecting(false);
                     setGame(true);
-                    console.log(message.payload.color)
                     setColor(message.payload.color)
-                    console.log(color)
                     break;
                 case MOVE: {
                     const move = message.payload;
                     chess.move(move);
                     setBoard(chess.board());
                     if (color === 'black') {
-                        console.log("came here");
                         setWhite((prevMoves) => [...(prevMoves || []), move.to]);
                     } else {
-                        console.log(color);
                         setBlack((prevMoves) => [...(prevMoves || []), move.to]);
                     }
 

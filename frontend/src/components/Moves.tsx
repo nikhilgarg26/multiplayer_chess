@@ -3,8 +3,6 @@
 type Color = 'white' | 'black';
 
 export const Moves = ({ color, black, white }: { color: Color | null, black:string[]|null, white:string[]|null }) => {
-    console.log(color);
-    // console.log(white);
     return (<div className="text-center mt-5 absolute top-0">
         <div className="text-white mb-2 text-xl font-bold">Game Started you are {color}</div>
         <div>

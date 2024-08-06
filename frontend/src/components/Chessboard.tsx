@@ -15,10 +15,7 @@ export const ChessBoard = ({ board, socket, color, setBoard, chess, setBlack, se
         color: Color;
     } | null)[][]>>, chess: Chess, setBlack: React.Dispatch<React.SetStateAction<string[] | null>>, setWhite: React.Dispatch<React.SetStateAction<string[] | null>>
 }) => {
-    console.log(color);
     color = color?.[0] ?? null;
-
-    console.log(color)
 
     const audio = new Audio('/sounds/movesound.mp3');
 
@@ -55,7 +52,7 @@ export const ChessBoard = ({ board, socket, color, setBoard, chess, setBlack, se
 
                 audio.play();
             } catch (error) {
-                console.error("Invalid move:", error);
+                console.log('Invalid Move')
             } finally {
                 setFrom(null);
             }
