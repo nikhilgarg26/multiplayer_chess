@@ -9,7 +9,7 @@ export const Landing = () => {
             <div className="pt-8 max-w-screen-lg mt-10">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div className="flex justify-center">
-                        <img src="/chessboard.png" className="max-w-96"></img>
+                        <img src="/chessboard.png" className="md:max-w-96 max-w-sm"></img>
                     </div>
                     <div className="pt-16">
                         <div className="flex justify-center">
