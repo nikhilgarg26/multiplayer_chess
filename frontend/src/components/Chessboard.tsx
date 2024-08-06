@@ -63,7 +63,7 @@ export const ChessBoard = ({ board, socket, color, setBoard, chess, setBlack, se
         {board.map((row, i) => {
             return <div key={i} className="flex">
                 {row.map((square, j) => {
-                    return <div key={j} onClick={() => handleClick(square, i + 1, j)} className={`w-16 h-16 flex justify-center items-center hover:bg-select ${(i + j) % 2 == 0 ? 'bg-bc' : 'bg-lightgreen'} ${from === square?.square ? 'bg-select' : ""}`}>
+                    return <div key={j} onClick={() => handleClick(square, i + 1, j)} className={`w-10 h-10 md:w-16 md:h-16 flex justify-center items-center hover:bg-select ${(i + j) % 2 == 0 ? 'bg-bc' : 'bg-lightgreen'} ${from === square?.square ? 'bg-select' : ""}`}>
                         {square ? <img src={`/assets/${square.color}${square.type}.png`}></img> : ""}
                     </div>
                 })}

@@ -70,11 +70,11 @@ export const Game = () => {
     return (<>
         <div className="flex justify-center ">
             <div className="pt-8 max-w-screen-lg w-full mt-10">
-                <div className="grid grid-cols-6 gap-4">
-                    <div className="col-span-4 flex justify-center">
+                {/* <div className="grid md:grid-cols-6 md:gap-4 align-middle">
+                    <div className="col-span-4 flex justify-center ">
                         <ChessBoard chess={chess} setBoard={setBoard} board={board} socket={socket} color={color} setBlack={setBlack} setWhite={setWhite}></ChessBoard>
                     </div>
-                    <div className="col-span-2 flex justify-center items-center relative bg-slate-800">
+                    <div className="col-span-full md:col-span-2 flex justify-center items-center relative bg-slate-800">
                         {connect ?
                             <div className="text-white">Searching Opponent ...</div> : (game ? <Moves color={color} black={black} white={white}></Moves> : <Button onClick={() => {
                                 socket?.send(JSON.stringify({
@@ -87,7 +87,36 @@ export const Game = () => {
                             </Button>)}
                     </div>
                     {over && <CustomizedDialogs winner={winner}></CustomizedDialogs>}
+                </div> */}
+
+                <div className="grid md:grid-cols-6 md:grid-rows-1 grid-cols-1 grid-rows-2 md:gap-4 gap-y-8">
+                    <div className="col-span-4 flex justify-center items-center">
+                        <ChessBoard chess={chess} setBoard={setBoard} board={board} socket={socket} color={color} setBlack={setBlack} setWhite={setWhite} />
+                    </div>
+                    <div className="col-span-full md:col-span-2 flex justify-center items-center relative bg-slate-800">
+                        {connect ? (
+                            <div className="text-white">Searching Opponent ...</div>
+                        ) : (
+                            game ? (
+                                <Moves color={color} black={black} white={white} />
+                            ) : (
+                                <Button
+                                    onClick={() => {
+                                        socket?.send(JSON.stringify({
+                                            type: INIT_GAME
+                                        }));
+                                        setConnecting(true);
+                                        audio.play();
+                                    }}
+                                >
+                                    Play
+                                </Button>
+                            )
+                        )}
+                    </div>
+                    {over && <CustomizedDialogs winner={winner} />}
                 </div>
+
             </div>
         </div>
     </>)
