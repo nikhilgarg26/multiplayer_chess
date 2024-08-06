@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 // import { WebSocket } from 'ws';
 
-const WS_URL = "ws://localhost:8080";
+const WS_URL = "wss://multiplayer-chess-0iex.onrender.com";
 export const useSocket = () => {
     const [socket, setSocket] = useState<WebSocket | null>(null);
 
