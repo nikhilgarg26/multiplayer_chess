@@ -18,7 +18,7 @@ export const Game = () => {
     const [game, setGame] = useState(false);
     const [connect, setConnecting] = useState(false);
     const [color, setColor] = useState<Color | null>(null);
-    const [chess, setChess] = useState(new Chess());
+    const [chess] = useState(new Chess());
     const [board, setBoard] = useState(chess.board());
     const [over, setOver] = useState(false);
     const [winner, setWinner] = useState<Color | null>(null);
